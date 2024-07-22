@@ -1,0 +1,6 @@
+>> nest new sleepr
+    (select pnpm)
+
+>> pnpm run start:dev
+
+>> nest generate library common
