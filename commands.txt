@@ -7,3 +7,10 @@
 >> nest generate module database -p common
 >> nest generate module config -p common
 >> nest g app reservations
+
+========== DOCKER COMPOSE =============
+.env
+    MONGO_URI = 'mongodb://mongo:27017/sleepr'
+
+>> docker compose up
+>> docker compose down
