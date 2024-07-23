@@ -7,6 +7,7 @@
 >> nest generate module database -p common
 >> nest generate module config -p common
 >> nest g app reservations
+>> nest g app auth
 
 ========== DOCKER COMPOSE =============
 .env
