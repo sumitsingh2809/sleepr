@@ -1,6 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
+import { Transport } from '@nestjs/microservices';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import cookieParser from 'cookie-parser';
 import { Logger } from 'nestjs-pino';
@@ -8,6 +9,12 @@ import { AuthModule } from './auth.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AuthModule);
+
+  const configService = app.get(ConfigService);
+  const HTTP_PORT = +configService.get('HTTP_PORT') || 3000;
+  const TCP_PORT = +configService.get('TCP_PORT');
+
+  app.connectMicroservice({ transport: Transport.TCP, options: { host: '0.0.0.0', port: TCP_PORT } });
 
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
@@ -21,10 +28,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
 
-  const configService = app.get(ConfigService);
-  const PORT = +configService.get('PORT') || 3000;
-
-  await app.listen(PORT);
-  console.log('Auth service is running on port', PORT);
+  await app.startAllMicroservices();
+  await app.listen(HTTP_PORT);
+  console.log('Auth service is running on port', HTTP_PORT);
 }
 bootstrap();
