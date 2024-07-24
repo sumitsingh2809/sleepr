@@ -17,6 +17,7 @@ export class AuthController {
   }
 
   @UseGuards(LocalAuthGuard)
+  // @UseGuards(AuthGuard('local'))
   @Post('login')
   @ApiBody({ type: LoginDto })
   async login(@currentUser() user: UserDocument, @Res({ passthrough: true }) res: Response) {
