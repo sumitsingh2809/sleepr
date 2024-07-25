@@ -14,11 +14,11 @@ export class CardDto {
 
   @IsNumber()
   @IsNotEmpty()
-  @ApiProperty({ default: 2027 })
+  @ApiProperty({ default: 2034 })
   exp_year: number;
 
   @IsString()
   @IsNotEmpty()
-  @ApiProperty({ default: '413' })
+  @ApiProperty({ default: '567' })
   cvc: string;
 }
