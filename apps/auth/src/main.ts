@@ -11,8 +11,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AuthModule);
 
   const configService = app.get(ConfigService);
-  const HTTP_PORT = +configService.get('HTTP_PORT') || 3000;
-  const TCP_PORT = +configService.get('TCP_PORT');
+  const HTTP_PORT = +configService.get('HTTP_PORT') || 3001;
+  const TCP_PORT = +configService.get('TCP_PORT') || 3002;
 
   app.connectMicroservice({ transport: Transport.TCP, options: { host: '0.0.0.0', port: TCP_PORT } });
 
