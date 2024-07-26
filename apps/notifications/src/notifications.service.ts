@@ -19,14 +19,14 @@ export class NotificationsService {
   constructor(private readonly configService: ConfigService) {}
 
   async notifyEmail(payload: NotifyEmailDto) {
-    const { email } = payload;
+    const { email, text } = payload;
     console.log(email);
 
     const mailRes = await this.transporter.sendMail({
       from: this.configService.get('SMTP_USER'),
       to: email,
       subject: 'Sleepr Notification',
-      text: 'Test text',
+      text,
     });
 
     console.log(mailRes);
