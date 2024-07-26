@@ -13,7 +13,7 @@ export class ReservationsController {
 
   @Post()
   async create(@Body() createReservationDto: CreateReservationDto, @currentUser() user: UserDto) {
-    return this.reservationsService.create(user._id, createReservationDto);
+    return this.reservationsService.create(user, createReservationDto);
   }
 
   @Get()
