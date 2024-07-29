@@ -1,4 +1,4 @@
-import { currentUser } from '@app/common';
+import { currentUser, UserDocument } from '@app/common';
 import { Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { ApiBody } from '@nestjs/swagger';
@@ -7,7 +7,6 @@ import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
-import { UserDocument } from './users/models/user.schema';
 
 @Controller()
 export class AuthController {

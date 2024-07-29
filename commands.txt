@@ -27,3 +27,12 @@ https://cloud.google.com/sdk/docs/install
 >> gcloud artifacts repositories list
 >> gcloud auth configure-docker \
     asia-south1-docker.pkg.dev
+
+>> docker build . -t reservations -f apps/reservations/Dockerfile
+>> docker build . -t auth -f apps/auth/Dockerfile
+>> docker build . -t notifications -f apps/notifications/Dockerfile
+>> docker build . -t payments -f apps/payments/Dockerfile
+
+>> docker tag reservations asia-south1-docker.pkg.dev/sleepr-430609/reservations/production
+>> docker image push asia-south1-docker.pkg.dev/sleepr-430609/reservations/production
+
