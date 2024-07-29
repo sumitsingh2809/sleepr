@@ -16,3 +16,14 @@
 
 >> docker compose up
 >> docker compose down
+
+========== GCP =============
+https://cloud.google.com/sdk/docs/install
+
+>> gcloud auth application-default login
+>> gcloud config configurations create sleepr
+>> gcloud config set project sleepr-430609
+>> gcloud config get project
+>> gcloud artifacts repositories list
+>> gcloud auth configure-docker \
+    asia-south1-docker.pkg.dev
