@@ -34,5 +34,12 @@ https://cloud.google.com/sdk/docs/install
 >> docker build . -t payments -f apps/payments/Dockerfile
 
 >> docker tag reservations asia-south1-docker.pkg.dev/sleepr-430609/reservations/production
+>> docker tag auth asia-south1-docker.pkg.dev/sleepr-430609/auth/production
+>> docker tag notifications asia-south1-docker.pkg.dev/sleepr-430609/notifications/production
+>> docker tag payments asia-south1-docker.pkg.dev/sleepr-430609/payments/production
+
 >> docker image push asia-south1-docker.pkg.dev/sleepr-430609/reservations/production
+>> docker image push asia-south1-docker.pkg.dev/sleepr-430609/auth/production
+>> docker image push asia-south1-docker.pkg.dev/sleepr-430609/notifications/production
+>> docker image push asia-south1-docker.pkg.dev/sleepr-430609/payments/production
 

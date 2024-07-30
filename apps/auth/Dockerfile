@@ -8,15 +8,20 @@ COPY custom.d.ts .
 COPY tsconfig.json tsconfig.json
 
 RUN npm install -g pnpm
+
+# install global dependencies
 RUN pnpm install
 
 # COPY . .
 COPY apps/auth apps/auth
 COPY libs libs
 
+# install service dependencies
+RUN cd apps/auth && pnpm install
+
 RUN pnpm run build
 
-
+# ======================================
 
 FROM node:alpine AS production
 
