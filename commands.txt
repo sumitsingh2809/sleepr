@@ -28,10 +28,10 @@ https://cloud.google.com/sdk/docs/install
 >> gcloud auth configure-docker \
     asia-south1-docker.pkg.dev
 
->> docker build . -t reservations -f apps/reservations/Dockerfile
 >> docker build . -t auth -f apps/auth/Dockerfile
 >> docker build . -t notifications -f apps/notifications/Dockerfile
 >> docker build . -t payments -f apps/payments/Dockerfile
+>> docker build . -t reservations -f apps/reservations/Dockerfile
 
 >> docker tag reservations asia-south1-docker.pkg.dev/sleepr-430609/reservations/production
 >> docker tag auth asia-south1-docker.pkg.dev/sleepr-430609/auth/production

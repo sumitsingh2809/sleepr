@@ -5,19 +5,18 @@ WORKDIR /usr/src/app
 COPY package.json .
 COPY pnpm-lock.yaml .
 COPY custom.d.ts .
-COPY tsconfig.json tsconfig.json
+COPY tsconfig.json .
+COPY nest-cli.json .
 
 RUN npm install -g pnpm
-RUN pnpm install
 
 # COPY . .
 COPY apps/notifications apps/notifications
 COPY libs libs
 
-# install service dependencies
-RUN cd apps/notifications && pnpm install
+RUN pnpm install -r
 
-RUN pnpm run build
+RUN pnpm run build notifications
 
 # ======================================
 
