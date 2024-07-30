@@ -55,3 +55,6 @@ steps:
     args:
       - 'push'
       - 'asia-south1-docker.pkg.dev/sleepr-430609/reservations/production'
+
+options:
+  logging: NONE
