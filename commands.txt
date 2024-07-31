@@ -54,6 +54,7 @@ https://cloud.google.com/sdk/docs/install
 >> helm install sleepr .
 >> kubectl get pods
 >> kubectl describe pods [pod id]
+
 - create service-account
 - create service-account json key
 >> kubectl create secret docker-registry gcr-json-key --docker-server=asia-south1-docker.pkg.dev --docker-username=_json_key --docker-password="$(cat /Users/sumit/Downloads/sleepr-430609-7f10d7c2d7bb.json)" --docker-email=itissumitsingh@gmail.com
@@ -64,3 +65,5 @@ https://cloud.google.com/sdk/docs/install
 >> cd k8s/sleepr/
 >> helm upgrade sleepr .
 >> kubectl get pods
+
+========== K8s secrets =============
