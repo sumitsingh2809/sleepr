@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: reservations
+  name: notifications
   labels:
-    app: reservations
+    app: notifications
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: reservations
+      app: notifications
   template:
     metadata:
       labels:
-        app: reservations
+        app: notifications
     spec:
       containers:
-        - image: asia-south1-docker.pkg.dev/sleepr-430609/reservations/production
-          name: reservations
+        - image: asia-south1-docker.pkg.dev/sleepr-430609/notifications/production
+          name: notifications
           resources:
             requests:
               cpu: '50m'

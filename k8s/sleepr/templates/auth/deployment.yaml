@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: reservations
+  name: auth
   labels:
-    app: reservations
+    app: auth
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: reservations
+      app: auth
   template:
     metadata:
       labels:
-        app: reservations
+        app: auth
     spec:
       containers:
-        - image: asia-south1-docker.pkg.dev/sleepr-430609/reservations/production
-          name: reservations
+        - image: asia-south1-docker.pkg.dev/sleepr-430609/auth/production
+          name: auth
           resources:
             requests:
               cpu: '50m'
