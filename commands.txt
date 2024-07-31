@@ -43,3 +43,19 @@ https://cloud.google.com/sdk/docs/install
 >> docker image push asia-south1-docker.pkg.dev/sleepr-430609/notifications/production
 >> docker image push asia-south1-docker.pkg.dev/sleepr-430609/payments/production
 
+
+========== K8s =============
+>> brew install helm
+>> cd k8s/
+>> helm create sleepr
+>> kubectl create deployment reservations --image=asia-south1-docker.pkg.dev/sleepr-430609/reservations/production --dry-run=client -o yaml > deployment.yaml
+>> mv deployment.yaml sleepr/templates/reservations/deployment.yaml
+>> cd sleepr/
+>> helm install sleepr .
+>> kubectl get pods
+>> kubectl describe pods [pod id]
+- create service-account
+- create service-account json key
+>> kubectl create secret docker-registry gcr-json-key --docker-server=asia-south1-docker.pkg.dev --docker-username=_json_key --docker-password="$(cat /Users/sumit/Downloads/sleepr-430609-7f10d7c2d7bb.json)" --docker-email=itissumitsingh@gmail.com
+>> kubectl patch serviceaccounts default -p '{"imagePullSecrets": [{"name": "gcr-json-key"}]}'
+>> kubectl rollout restart deployment reservations
