@@ -108,3 +108,7 @@ https://cloud.google.com/sdk/docs/install
 >> kubectl apply -f=ingress.yaml
 - Get IP address
 >> kubectl get ingresses.networking.k8s.io
+
+======= Delete =======
+>> helm del sleepr
+>> kubectl delete ingresses.networking.k8s.io sleepr
