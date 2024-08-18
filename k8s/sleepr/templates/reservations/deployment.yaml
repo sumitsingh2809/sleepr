@@ -14,13 +14,21 @@ spec:
       labels:
         app: reservations
     spec:
+      imagePullSecrets:
+        - name: gcr-json-key
       containers:
         - image: asia-south1-docker.pkg.dev/sleepr-430609/reservations/production
           name: reservations
+          env:
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb
+                  key: MONGO_URI
           resources:
             requests:
-              cpu: '50m'
-              memory: '64Mi'
+              cpu: '500m'
+              memory: '256Mi'
             limits:
-              cpu: '100m'
-              memory: '128Mi'
+              cpu: '1000m'
+              memory: '512Mi'

@@ -57,9 +57,13 @@ https://cloud.google.com/sdk/docs/install
 
 - create service-account in gcp console
 - create service-account json key
->> kubectl create secret docker-registry gcr-json-key --docker-server=asia-south1-docker.pkg.dev --docker-username=_json_key --docker-password="$(cat /Users/sumit/Downloads/sleepr-430609-7f10d7c2d7bb.json)" --docker-email=itissumitsingh@gmail.com
+>> kubectl create secret docker-registry gcr-json-key \
+  --docker-server=asia-south1-docker.pkg.dev \
+  --docker-username=_json_key \
+  --docker-password="$(cat /Users/sumit/Downloads/sleepr-430609-7f10d7c2d7bb.json)" \
+  --docker-email=itissumitsingh@gmail.com
 >> kubectl patch serviceaccounts default -p '{"imagePullSecrets": [{"name": "gcr-json-key"}]}'
->> kubectl rollout restart deployment reservations
+>> kubectl rollout restart deployment auth notifications payments reservations
 
 - create all services deployment.yaml
 >> cd k8s/sleepr/
@@ -67,3 +71,7 @@ https://cloud.google.com/sdk/docs/install
 >> kubectl get pods
 
 ========== K8s secrets =============
+>> kubectl create secret generic mongodb --from-literal=MONGO_URI=mongodb+srv://username:password@host/sleepr
+>> kubectl get secrets -o yaml mongodb
+- add reservations and auth deployment env for MONGO_URI
+>> kubectl create secret generic google --from-literal=GOOGLE_OAUTH_CLIENT_SECRET={secret} --from-literal=GOOGLE_OAUTH_REFRESH_TOKEN={refreshToken}

@@ -14,13 +14,15 @@ spec:
       labels:
         app: payments
     spec:
+      imagePullSecrets:
+        - name: gcr-json-key
       containers:
         - image: asia-south1-docker.pkg.dev/sleepr-430609/payments/production
           name: payments
           resources:
             requests:
-              cpu: '50m'
-              memory: '64Mi'
+              cpu: '500m'
+              memory: '256Mi'
             limits:
-              cpu: '100m'
-              memory: '128Mi'
+              cpu: '1000m'
+              memory: '512Mi'
