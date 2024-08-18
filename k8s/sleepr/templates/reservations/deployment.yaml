@@ -20,11 +20,23 @@ spec:
         - image: asia-south1-docker.pkg.dev/sleepr-430609/reservations/production
           name: reservations
           env:
+            - name: PORT
+              value: '3004'
+            - name: AUTH_TCP_HOST
+              value: auth-tcp
+            - name: AUTH_TCP_PORT
+              value: '3002'
+            - name: PAYMENTS_TCP_HOST
+              value: payments
+            - name: PAYMENTS_TCP_PORT
+              value: '3001'
             - name: MONGO_URI
               valueFrom:
                 secretKeyRef:
                   name: mongodb
                   key: MONGO_URI
+          ports:
+            - containerPort: 3004
           resources:
             requests:
               cpu: '500m'

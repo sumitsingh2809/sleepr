@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-http
+  labels:
+    app: auth
+spec:
+  selector:
+    app: auth
+  type: LoadBalancer
+  ports:
+    - port: 3003
+      targetPort: 3003
+      protocol: TCP
+      name: 'http'

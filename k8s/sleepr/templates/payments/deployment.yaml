@@ -19,6 +19,20 @@ spec:
       containers:
         - image: asia-south1-docker.pkg.dev/sleepr-430609/payments/production
           name: payments
+          env:
+            - name: PORT
+              value: '3001'
+            - name: NOTIFICATION_TCP_HOST
+              value: notifications
+            - name: NOTIFICATION_TCP_PORT
+              value: '3000'
+            - name: STRIPE_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: stripe
+                  key: STRIPE_SECRET_KEY
+          ports:
+            - containerPort: 3001
           resources:
             requests:
               cpu: '500m'

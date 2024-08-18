@@ -20,11 +20,28 @@ spec:
         - image: asia-south1-docker.pkg.dev/sleepr-430609/auth/production
           name: auth
           env:
+            - name: TCP_PORT
+              value: '3002'
+            - name: HTTP_PORT
+              value: '3003'
             - name: MONGO_URI
               valueFrom:
                 secretKeyRef:
                   name: mongodb
                   key: MONGO_URI
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: jwt
+                  key: JWT_SECRET
+            - name: JWT_EXPIRATION
+              valueFrom:
+                secretKeyRef:
+                  name: jwt
+                  key: JWT_EXPIRATION
+          ports:
+            - containerPort: 3002
+            - containerPort: 3003
           resources:
             requests:
               cpu: '500m'
