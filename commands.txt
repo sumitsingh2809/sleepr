@@ -82,3 +82,29 @@ https://cloud.google.com/sdk/docs/install
 
 - http://localhost:3003/doc
 - http://localhost:3004/doc
+
+
+========== GKE =============
+- create autopilot cluster
+>> gcloud container clusters get-credentials sleepr --region us-central1 --project sleepr-430609
+>> kubectl config get-contexts
+>> kubectl get nodes
+>> kubectl get pods
+>> cd k8s/sleepr/
+>> helm install sleepr .
+
+- transfer secrets
+    >> kubectl config use-context docker-desktop
+    >> kubectl get secrets
+    >> kubectl get secrets google -o yaml > google.yaml
+    >> kubectl get secrets jwt -o yaml > jwt.yaml
+    >> kubectl get secrets mongodb -o yaml > mongodb.yaml
+    >> kubectl get secrets stripe -o yaml > stripe.yaml
+    >> kubectl config use-context gke_sleepr-430609_us-central1_sleepr
+    >> kubectl create -f=google.yaml -f=jwt.yaml -f=mongodb.yaml -f=stripe.yaml
+    - delete google.yaml jwt.yaml mongodb.yaml stripe.yaml
+
+- create ingress.yaml
+>> kubectl apply -f=ingress.yaml
+- Get IP address
+>> kubectl get ingresses.networking.k8s.io
