@@ -1,1 +1,4 @@
 >> docker compose up e2e
+
+// to re-pull images
+>> docker compose pull
