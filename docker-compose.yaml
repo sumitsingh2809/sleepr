@@ -53,5 +53,10 @@ services:
     volumes:
       - .:/usr/src/app
 
-  # mongo:
-  #   image: mongo
+  mongo:
+    image: mongo
+
+  rabbitmq:
+    image: rabbitmq
+    ports:
+      - 5672:5672

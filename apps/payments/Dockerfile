@@ -14,7 +14,8 @@ RUN npm install -g pnpm
 COPY apps/payments apps/payments
 COPY libs libs
 
-RUN pnpm install -r
+# RUN pnpm install -r
+RUN pnpm install --frozen-lockfile
 
 RUN pnpm run build payments
 

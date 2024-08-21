@@ -29,8 +29,13 @@ import { ReservationsService } from './reservations.service';
       {
         name: AUTH_SERVICE,
         useFactory: (configService: ConfigService) => ({
-          transport: Transport.TCP,
-          options: { host: configService.get('AUTH_TCP_HOST'), port: configService.get('AUTH_TCP_PORT') },
+          // transport: Transport.TCP,
+          // options: { host: configService.get('AUTH_TCP_HOST'), port: configService.get('AUTH_TCP_PORT') },
+          transport: Transport.RMQ,
+          options: {
+            urls: [configService.getOrThrow<string>('RABBITMQ_URI')],
+            queue: 'auth',
+          },
         }),
         inject: [ConfigService],
       },
@@ -39,6 +44,11 @@ import { ReservationsService } from './reservations.service';
         useFactory: (configService: ConfigService) => ({
           transport: Transport.TCP,
           options: { host: configService.get('PAYMENTS_TCP_HOST'), port: configService.get('PAYMENTS_TCP_PORT') },
+          // transport: Transport.RMQ,
+          // options: {
+          //   urls: [configService.getOrThrow<string>('RABBITMQ_URI')],
+          //   queue: 'payments',
+          // },
         }),
         inject: [ConfigService],
       },

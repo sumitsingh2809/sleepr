@@ -19,7 +19,8 @@ COPY libs libs
 
 # install service dependencies
 # RUN cd apps/auth && pnpm install
-RUN pnpm install -r
+# RUN pnpm install -r
+RUN pnpm install --frozen-lockfile
 
 RUN pnpm run build auth
 

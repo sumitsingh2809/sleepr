@@ -1,7 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
-import { Transport } from '@nestjs/microservices';
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import cookieParser from 'cookie-parser';
 import { Logger } from 'nestjs-pino';
@@ -14,7 +14,14 @@ async function bootstrap() {
   const HTTP_PORT = +configService.get('HTTP_PORT') || 3001;
   const TCP_PORT = +configService.get('TCP_PORT') || 3002;
 
-  app.connectMicroservice({ transport: Transport.TCP, options: { host: '0.0.0.0', port: TCP_PORT } });
+  // app.connectMicroservice<MicroserviceOptions>({ transport: Transport.TCP, options: { host: '0.0.0.0', port: TCP_PORT } });
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.RMQ,
+    options: {
+      urls: [configService.getOrThrow('RABBITMQ_URI') as string],
+      queue: 'auth',
+    },
+  });
 
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));

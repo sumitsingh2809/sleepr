@@ -23,10 +23,15 @@ import { PaymentsService } from './payments.service';
       {
         name: NOTIFICATIONS_SERVICE,
         useFactory: (configService: ConfigService) => ({
-          transport: Transport.TCP,
+          // transport: Transport.TCP,
+          // options: {
+          //   host: configService.get('NOTIFICATION_TCP_HOST'),
+          //   port: configService.get('NOTIFICATION_TCP_PORT'),
+          // },
+          transport: Transport.RMQ,
           options: {
-            host: configService.get('NOTIFICATION_TCP_HOST'),
-            port: configService.get('NOTIFICATION_TCP_PORT'),
+            urls: [configService.getOrThrow<string>('RABBITMQ_URI')],
+            queue: 'notifications',
           },
         }),
         inject: [ConfigService],
