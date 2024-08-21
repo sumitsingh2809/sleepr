@@ -1,4 +1,4 @@
-import { currentUser, JwtAuthGuard, UserDto } from '@app/common';
+import { currentUser, JwtAuthGuard, Roles, UserDto } from '@app/common';
 import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateReservationDto } from './dto/create-reservation.dto';
@@ -32,6 +32,7 @@ export class ReservationsController {
   }
 
   @Delete(':id')
+  @Roles('Admin')
   remove(@Param('id') id: string) {
     return this.reservationsService.remove(id);
   }
