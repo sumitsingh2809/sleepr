@@ -1,3 +1,4 @@
+import { AUTH_PACKAGE_NAME } from '@app/common';
 import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
@@ -5,6 +6,7 @@ import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import cookieParser from 'cookie-parser';
 import { Logger } from 'nestjs-pino';
+import { join } from 'path';
 import { AuthModule } from './auth.module';
 
 async function bootstrap() {
@@ -15,11 +17,19 @@ async function bootstrap() {
   const TCP_PORT = +configService.get('TCP_PORT') || 3002;
 
   // app.connectMicroservice<MicroserviceOptions>({ transport: Transport.TCP, options: { host: '0.0.0.0', port: TCP_PORT } });
+  // app.connectMicroservice<MicroserviceOptions>({
+  //   transport: Transport.RMQ,
+  //   options: {
+  //     urls: [configService.getOrThrow('RABBITMQ_URI') as string],
+  //     queue: 'auth',
+  //   },
+  // });
   app.connectMicroservice<MicroserviceOptions>({
-    transport: Transport.RMQ,
+    transport: Transport.GRPC,
     options: {
-      urls: [configService.getOrThrow('RABBITMQ_URI') as string],
-      queue: 'auth',
+      package: AUTH_PACKAGE_NAME,
+      protoPath: join(__dirname, '../../../proto/auth.proto'),
+      url: configService.getOrThrow('AUTH_GRPC_URL'),
     },
   });
 

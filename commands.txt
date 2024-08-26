@@ -112,3 +112,14 @@ https://cloud.google.com/sdk/docs/install
 ======= Delete =======
 >> helm del sleepr
 >> kubectl delete ingresses.networking.k8s.io sleepr
+
+
+========== gRPC =============
+>> pnpm i @grpc/grpc-js @grpc/proto-loader ts-proto
+
+>> protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./ --ts_proto_opt=nestJs=true ./proto/auth.proto
+>> protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./ --ts_proto_opt=nestJs=true ./proto/payments.proto
+>> protoc --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=./ --ts_proto_opt=nestJs=true ./proto/notifications.proto
+
+- move generated types to libs/common/src/types dir
+- update JwtAuthGuard to use ClientGrpc
