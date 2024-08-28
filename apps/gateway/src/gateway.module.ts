@@ -1,9 +1,12 @@
-import { IntrospectAndCompose } from '@apollo/gateway';
-import { LoggerModule } from '@app/common';
+import { IntrospectAndCompose, RemoteGraphQLDataSource } from '@apollo/gateway';
+import { AUTH_PACKAGE_NAME, AUTH_SERVICE_NAME, LoggerModule } from '@app/common';
 import { ApolloGatewayDriver, ApolloGatewayDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { join } from 'path';
+import { authContext } from './auth.context';
 
 @Module({
   imports: [
@@ -12,14 +15,40 @@ import { GraphQLModule } from '@nestjs/graphql';
     GraphQLModule.forRootAsync<ApolloGatewayDriverConfig>({
       driver: ApolloGatewayDriver,
       useFactory: (configService: ConfigService) => ({
+        server: {
+          context: authContext, // called on every request at gateway
+        },
         gateway: {
           supergraphSdl: new IntrospectAndCompose({
             subgraphs: [{ name: 'reservations', url: configService.getOrThrow('RESERVATIONS_GRAPHQL_URL') }],
           }),
+          buildService({ name, url }) {
+            return new RemoteGraphQLDataSource({
+              url,
+              willSendRequest({ request, context }) {
+                // set "user" header when request is sent to downstream microservices
+                request.http.headers.set('user', context.user ? JSON.stringify(context.user) : null);
+              },
+            });
+          },
         },
       }),
       inject: [ConfigService],
     }),
+    ClientsModule.registerAsync([
+      {
+        name: AUTH_SERVICE_NAME,
+        useFactory: (configService: ConfigService) => ({
+          transport: Transport.GRPC,
+          options: {
+            package: AUTH_PACKAGE_NAME,
+            protoPath: join(__dirname, '../../../proto/auth.proto'),
+            url: configService.getOrThrow('AUTH_GRPC_URL'),
+          },
+        }),
+        inject: [ConfigService],
+      },
+    ]),
   ],
 })
 export class GatewayModule {}

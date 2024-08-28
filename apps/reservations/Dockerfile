@@ -14,7 +14,8 @@ RUN npm install -g pnpm
 COPY apps/reservations apps/reservations
 COPY libs libs
 
-RUN pnpm install -r
+# RUN pnpm install -r
+RUN pnpm install --frozen-lockfile
 
 RUN pnpm run build reservations
 
