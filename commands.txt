@@ -123,3 +123,9 @@ https://cloud.google.com/sdk/docs/install
 
 - move generated types to libs/common/src/types dir
 - update JwtAuthGuard to use ClientGrpc
+
+
+========== Apollo Federation Gateway =============
+>> git checkout -b graphql
+>> nest g app gateway
+>> pnpm i @apollo/gateway @apollo/server @apollo/subgraph @nestjs/apollo @nestjs/graphql graphql
