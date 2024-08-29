@@ -20,7 +20,10 @@ import { authContext } from './auth.context';
         },
         gateway: {
           supergraphSdl: new IntrospectAndCompose({
-            subgraphs: [{ name: 'reservations', url: configService.getOrThrow('RESERVATIONS_GRAPHQL_URL') }],
+            subgraphs: [
+              { name: 'reservations', url: configService.getOrThrow('RESERVATIONS_GRAPHQL_URL') },
+              { name: 'auth', url: configService.getOrThrow('AUTH_GRAPHQL_URL') },
+            ],
           }),
           buildService({ name, url }) {
             return new RemoteGraphQLDataSource({

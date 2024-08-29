@@ -1,6 +1,8 @@
 import { HealthModule, LoggerModule } from '@app/common';
+import { ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { GraphQLModule } from '@nestjs/graphql';
 import { JwtModule } from '@nestjs/jwt';
 import Joi from 'joi';
 import { AuthController } from './auth.controller';
@@ -29,6 +31,10 @@ import { UsersModule } from './users/users.module';
         signOptions: { expiresIn: `${configService.get('JWT_EXPIRATION')}s` },
       }),
       inject: [ConfigService],
+    }),
+    GraphQLModule.forRoot<ApolloFederationDriverConfig>({
+      driver: ApolloFederationDriver,
+      autoSchemaFile: { federation: 2 },
     }),
     UsersModule,
     HealthModule,
