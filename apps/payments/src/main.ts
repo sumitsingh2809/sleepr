@@ -8,7 +8,7 @@ async function bootstrap() {
   const app = await NestFactory.create(PaymentsModule);
 
   const configService = app.get(ConfigService);
-  const PORT = +configService.get<string>('PORT');
+  const PORT = +configService.get<string>('TCP_PORT');
 
   app.useLogger(app.get(Logger));
 
@@ -21,5 +21,6 @@ async function bootstrap() {
   });
 
   await app.startAllMicroservices();
+  await app.listen(configService.getOrThrow('HTTP_PORT'));
 }
 bootstrap();

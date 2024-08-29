@@ -23,6 +23,7 @@ import { authContext } from './auth.context';
             subgraphs: [
               { name: 'reservations', url: configService.getOrThrow('RESERVATIONS_GRAPHQL_URL') },
               { name: 'auth', url: configService.getOrThrow('AUTH_GRAPHQL_URL') },
+              { name: 'payments', url: configService.getOrThrow('PAYMENTS_GRAPHQL_URL') },
             ],
           }),
           buildService({ name, url }) {
